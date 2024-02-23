@@ -10,10 +10,12 @@
   "author": "Kudakwashe Masaya",
   "license": "MIT",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "colors": "^1.4.0",
     "dotenv": "^16.4.1",
     "express": "^4.18.2",
     "express-fileupload": "^1.4.3",
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.1.1",
     "morgan": "^1.10.0",
     "node-geocoder": "^4.2.0",
