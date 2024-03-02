@@ -16,7 +16,13 @@ exports.register = asyncHandler(async (req, res, next) => {
   //   Create token
   if (user) {
     generateToken(res, user._id);
-    res.status(200).json({ success: true });
+    res.status(200).json({
+      success: true,
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+    });
   } else {
     res.status(400);
     throw new Error("Invalid user data");
@@ -27,6 +33,7 @@ exports.register = asyncHandler(async (req, res, next) => {
 // Route  POST /api/v1/auth/login
 // Access Public
 exports.login = asyncHandler(async (req, res, next) => {
+  console.log("Login");
   const { email, password } = req.body;
 
   // Validate email and password
@@ -58,5 +65,17 @@ exports.login = asyncHandler(async (req, res, next) => {
     name: user.name,
     email: user.email,
     role: user.role,
+  });
+});
+
+// Desc   Get current logged in User
+// Route  POST /api/v1/auth/me
+// Access Private
+exports.getMe = asyncHandler(async (req, res, next) => {
+  const user = await User.findById(req.user.id).select("-password");
+
+  res.status(200).json({
+    success: true,
+    data: user,
   });
 });

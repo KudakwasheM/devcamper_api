@@ -7,7 +7,7 @@ const Bootcamp = require("../models/Bootcamp");
 //Route     GET /api/v1/courses
 //Route     GET /api/v1/bootcamps/:bootcampId/courses
 //Access    Public
-exports.getCourses = asyncHandler(async (req, res, next) => {
+const getCourses = asyncHandler(async (req, res, next) => {
   if (req.params.bootcampId) {
     const courses = Course.find({ bootcamp: req.params.bootcampId });
     return res
@@ -21,7 +21,7 @@ exports.getCourses = asyncHandler(async (req, res, next) => {
 //Desc      Get a single course
 //Route     GET /api/v1/courses/:id
 //Access    Public
-exports.getCourse = asyncHandler(async (req, res, next) => {
+const getCourse = asyncHandler(async (req, res, next) => {
   const course = await Course.findById(req.params.id).populate({
     path: "bootcamp",
     select: "name description",
@@ -43,7 +43,7 @@ exports.getCourse = asyncHandler(async (req, res, next) => {
 //Desc      Add a single course
 //Route     POST /api/v1/bootcamps/:bootcampId/courses
 //Access    Private
-exports.addCourse = asyncHandler(async (req, res, next) => {
+const addCourse = asyncHandler(async (req, res, next) => {
   req.body.bootcamp = req.params.bootcampId;
   const bootcamp = await Bootcamp.findById(req.params.bootcampId);
 
@@ -65,7 +65,7 @@ exports.addCourse = asyncHandler(async (req, res, next) => {
 //Desc      Update a single course
 //Route     PUT /api/v1/courses/:id
 //Access    Private
-exports.updateCourse = asyncHandler(async (req, res, next) => {
+const updateCourse = asyncHandler(async (req, res, next) => {
   let course = await Course.findById(req.params.id);
 
   if (!course) {
@@ -89,7 +89,7 @@ exports.updateCourse = asyncHandler(async (req, res, next) => {
 //Desc      Delete a single course
 //Route     DELETE /api/v1/courses/:id
 //Access    Private
-exports.deleteCourse = asyncHandler(async (req, res, next) => {
+const deleteCourse = asyncHandler(async (req, res, next) => {
   const course = await Course.findById(req.params.id);
 
   if (!course) {
@@ -107,3 +107,11 @@ exports.deleteCourse = asyncHandler(async (req, res, next) => {
     data: {},
   });
 });
+
+module.exports = {
+  getCourses,
+  getCourse,
+  addCourse,
+  updateCourse,
+  deleteCourse,
+};
