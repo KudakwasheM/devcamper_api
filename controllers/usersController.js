@@ -52,7 +52,7 @@ exports.updateUser = asyncHandler(async (req, res, next) => {
 // Route     DELETE /api/v1/users/:id
 // Access    Private
 exports.deleteUser = asyncHandler(async (req, res, next) => {
-  const user = await User.findByIdAndDelete(req.params.id);
+  await User.findByIdAndDelete(req.params.id);
 
   res.status(201).json({
     success: true,

@@ -9,10 +9,10 @@ const Bootcamp = require("../models/Bootcamp");
 //Access    Public
 const getCourses = asyncHandler(async (req, res, next) => {
   if (req.params.bootcampId) {
-    const courses = Course.find({ bootcamp: req.params.bootcampId });
+    const courses = await Course.find({ bootcamp: req.params.bootcampId });
     return res
       .status(200)
-      .json({ success: true, count: (await courses).length, data: courses });
+      .json({ success: true, count: courses.length, data: courses });
   } else {
     res.status(200).json(res.advancedResults);
   }
@@ -29,8 +29,7 @@ const getCourse = asyncHandler(async (req, res, next) => {
 
   if (!course) {
     return next(
-      new ErrorResponse(`No course with the id ${req.params.id}`),
-      404
+      new ErrorResponse(`No course with the id ${req.params.id}`, 404)
     );
   }
 
@@ -51,8 +50,7 @@ const addCourse = asyncHandler(async (req, res, next) => {
 
   if (!bootcamp) {
     return next(
-      new ErrorResponse(`No bootcamp with the id ${req.params.id}`),
-      404
+      new ErrorResponse(`No bootcamp with the id ${req.params.id}`, 404)
     );
   }
 
@@ -82,8 +80,7 @@ const updateCourse = asyncHandler(async (req, res, next) => {
 
   if (!course) {
     return next(
-      new ErrorResponse(`No bootcamp with the id ${req.params.id}`),
-      404
+      new ErrorResponse(`No bootcamp with the id ${req.params.id}`, 404)
     );
   }
 
@@ -116,8 +113,7 @@ const deleteCourse = asyncHandler(async (req, res, next) => {
 
   if (!course) {
     return next(
-      new ErrorResponse(`No bootcamp with the id ${req.params.id}`),
-      404
+      new ErrorResponse(`No bootcamp with the id ${req.params.id}`, 404)
     );
   }
 

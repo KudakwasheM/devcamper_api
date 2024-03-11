@@ -203,3 +203,14 @@ exports.updatePassword = asyncHandler(async (req, res, next) => {
     data: user,
   });
 });
+
+// Desc     Logout user / clear cookie
+// Route    GET /api/v1/logout
+// Access   Public
+exports.logout = asyncHandler(async (req, res, next) => {
+  res.cookie("jwt", "", {
+    httpOnly: true,
+    expires: new Date(Date.now()),
+  });
+  res.status(200).json({ success: true, message: "User logged out" });
+});
